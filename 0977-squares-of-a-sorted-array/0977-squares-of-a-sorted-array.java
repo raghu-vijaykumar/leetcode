@@ -10,6 +10,9 @@ class Solution {
                     pivot = i;
             }
         }
+        if (pivot == 0 && nums[nums.length - 1] < 0) {
+            pivot = nums.length - 1;
+        }
 
         int[] sqrs = new int[nums.length];
 
@@ -18,7 +21,7 @@ class Solution {
         sqrs[0] = nums[pivot] * nums[pivot];
         int i = 1;
         while (true) {
-            //System.out.println(l +"-"+ r);
+            // System.out.println(l +"-"+ r);
             if (l >= 0 && r < nums.length && Math.abs(nums[l]) <= Math.abs(nums[r])) {
                 sqrs[i++] = nums[l] * nums[l];
                 l--;
@@ -30,12 +33,12 @@ class Solution {
             }
         }
 
-        while(r<nums.length) {
+        while (r < nums.length) {
             sqrs[i++] = nums[r] * nums[r];
             r++;
         }
 
-        while(l>=0) {
+        while (l >= 0) {
             sqrs[i++] = nums[l] * nums[l];
             l--;
         }
