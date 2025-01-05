@@ -13,12 +13,13 @@ class Solution {
         }
 
         int diff = res[res.length - 1];
+        char[] arr = new char[s.length()];
         StringBuilder sb = new StringBuilder();
         for (int i = res.length - 2; i >= 0; i--) {
-            sb.append((char) ('a' + (((s.charAt(i) - 'a' + diff) % 26 + 26) % 26)));
+            arr[i] = (char) ('a' + (((s.charAt(i) - 'a' + diff) % 26 + 26) % 26));
             diff += res[i];
         }
 
-        return sb.reverse().toString();
+        return new String(arr);
     }
 }
