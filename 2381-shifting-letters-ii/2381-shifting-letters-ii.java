@@ -3,8 +3,13 @@ class Solution {
         int[] res = new int[s.length() + 1];
 
         for (int[] shift : shifts) {
-            res[shift[1] + 1] = shift[2] == 1 ? res[shift[1] + 1] + 1 : res[shift[1] + 1] - 1;
-            res[shift[0]] = shift[2] == 1 ? res[shift[0]] - 1 : res[shift[0]] + 1;
+            if (shift[2] == 1) {
+                res[shift[1] + 1] += 1;
+                res[shift[0]] -= 1;
+            } else {
+                res[shift[1] + 1] -= 1;
+                res[shift[0]] += 1;
+            }
         }
 
         int diff = res[res.length - 1];
