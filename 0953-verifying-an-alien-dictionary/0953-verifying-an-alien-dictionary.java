@@ -1,28 +1,26 @@
 class Solution {
     public boolean isAlienSorted(String[] words, String order) {
-        HashMap<Character, Integer> alphabets = new HashMap<>();
-
-        int i=0;
-        for(char c: order.toCharArray()) {
-            alphabets.put(c, i++);
+        int[] charOrder = new int[26];
+        for (int i = 0; i < order.length(); i++) {
+            charOrder[order.charAt(i) - 'a'] = i;
         }
 
-        for(int j = 1;j<words.length;j++){
+        for (int j = 1; j < words.length; j++) {
             int k = 0;
-            String first = words[j-1];
+            String first = words[j - 1];
             String second = words[j];
-            while(true) {
-                if(k>= first.length()) break;
+            while (true) {
+                if (k >= first.length()) break;
 
-                if( k>= second.length()) return false;
+                if (k >= second.length()) return false;
 
-                if(alphabets.get(first.charAt(k)) < alphabets.get(second.charAt(k))) break;
+                if (charOrder[first.charAt(k) - 'a'] < charOrder[second.charAt(k) - 'a']) break;
 
-                else if(alphabets.get(first.charAt(k)) > alphabets.get(second.charAt(k))) return false; 
+                else if (charOrder[first.charAt(k) - 'a'] > charOrder[second.charAt(k) - 'a']) return false;
                 else k++;
 
             }
-            
+
         }
 
         return true;
