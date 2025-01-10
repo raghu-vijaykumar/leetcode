@@ -9,23 +9,22 @@ class Solution {
             }
         }
 
-        int[][] w2 = new int[words2.length][26];
+        int[] w2 = new int[26];
+        Arrays.fill(w2, -1);
         for (int i = 0; i < words2.length; i++) {
-            Arrays.fill(w2[i], -1);
-            for (char c : words2[i].toCharArray()) {
-                w2[i][c - 'a']++;
+            int[] temp = counter(words2[i]);
+            for (int j = 0; j < 26; j++) {
+                w2[j] = Math.max(w2[j], temp[j]);
             }
-            //System.out.println(Arrays.toString(w2[i]));
         }
+        //System.out.println(Arrays.toString(w2));
 
         for (int i = 0; i < w1.length; i++) {
             boolean contains = true;
-            for (int j = 0; j < w2.length && contains; j++) {
-                for (int k = 0; k < 26; k++) {
-                    if (w2[j][k] != -1 && w1[i][k] < w2[j][k] + 1) {
-                        contains = false;
-                        break;
-                    }
+            for (int k = 0; k < 26; k++) {
+                if (w2[k] != -1 && w1[i][k] < w2[k] + 1) {
+                    contains = false;
+                    break;
                 }
             }
             if (contains)
@@ -34,5 +33,14 @@ class Solution {
 
         return result;
 
+    }
+
+    public int[] counter(String s) {
+        int[] counter = new int[26];
+        Arrays.fill(counter, -1);
+        for (char c : s.toCharArray()) {
+            counter[c - 'a']++;
+        }
+        return counter;
     }
 }
