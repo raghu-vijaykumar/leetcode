@@ -1,22 +1,19 @@
 class Solution {
     public int subarraySum(int[] nums, int k) {
-        int[] ps = new int[nums.length + 1];
-        ps[0] = 0;
-        for (int i = 0; i < nums.length; i++) {
-            ps[i + 1] = ps[i] + nums[i];
-        }
-
-        System.out.println(Arrays.toString(ps));
-
         int count = 0;
-        for (int m =1 ; m < ps.length; m++) {
-            for (int n = m; n < ps.length; n++) {
-                //System.out.println(ps[n-m] + "-" + ps[n] +"=" +  (ps[n] - ps[n - m]));
-                if (ps[n] - ps[n-m] == k)
+      
+        int[] sum = new int[nums.length + 1];
+        sum[0] = 0;
+        for (int i = 1; i <= nums.length; i++)
+            sum[i] = sum[i - 1] + nums[i - 1];
+      
+        for (int start = 0; start < sum.length; start++) {
+            for (int end = start + 1; end < sum.length; end++) {
+                if (sum[end] - sum[start] == k)
                     count++;
             }
         }
-
+      
         return count;
     }
 }
