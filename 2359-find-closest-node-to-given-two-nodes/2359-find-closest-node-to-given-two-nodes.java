@@ -42,6 +42,6 @@ class Solution {
             }
         }
 
-        return minNode;
+        return minNode == Integer.MAX_VALUE ? -1 : minNode;
     }
 }
