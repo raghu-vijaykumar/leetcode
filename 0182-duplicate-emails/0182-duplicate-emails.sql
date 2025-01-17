@@ -1,2 +1,2 @@
-# Write your MySQL query statement below
-SELECT email as `Email` FROM Person GROUP BY email HAVING count(*) > 1
+-- Write your PostgreSQL query statement below
+SELECT email from person group by email having count(email) > 1;
