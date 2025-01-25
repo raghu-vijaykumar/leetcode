@@ -1,37 +1,30 @@
 class Solution {
-    public static class Pair {
-        int element;
-        int index;
-
-        Pair(int element, int index) {
-            this.element = element;
-            this.index = index;
-        }
-    }
     public int[] lexicographicallySmallestArray(int[] nums, int limit) {
-        int n = nums.length;
-        List<Pair> pairs = new ArrayList<>();
-        for (int i = 0; i < n; ++i) 
-            pairs.add(new Pair(nums[i], i));
-        pairs.sort(Comparator.comparingInt(p -> p.element));
+        int[] originalNums = nums.clone();
+        Arrays.sort(nums);
+        List<Queue<Integer>> q = new ArrayList<>();
+        q.add(new LinkedList<Integer>());
+        int index = 0;
+        q.get(index).offer(nums[0]);
+        HashMap<Integer, Integer> qMap = new HashMap<>();
+        qMap.put(nums[0], index);
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] - nums[i - 1] > limit) {
+                index++;
+                q.add(new LinkedList<Integer>());
+            }
 
-        List<List<Pair>> result = new ArrayList<>();
-        result.add(new ArrayList<>(Arrays.asList(pairs.get(0))));
-
-        for (int i = 1; i < n; ++i) {
-            if (pairs.get(i).element - pairs.get(i - 1).element <= limit)
-                result.get(result.size() - 1).add(pairs.get(i));
-            else
-                result.add(new ArrayList<>(Arrays.asList(pairs.get(i))));
+            q.get(index).offer(nums[i]);
+            qMap.put(nums[i], index);
         }
 
-        for (List<Pair> group : result) {
-            List<Pair> sortedGroup = new ArrayList<>(group);
-            sortedGroup.sort(Comparator.comparingInt(p -> p.index));
+        //System.out.println(qMap);
 
-            for (int i = 0; i < group.size(); ++i)
-                nums[sortedGroup.get(i).index] = group.get(i).element;
+        int[] res = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            res[i] = q.get(qMap.get(originalNums[i])).poll();
         }
-        return nums;
+
+        return res;
     }
 }
