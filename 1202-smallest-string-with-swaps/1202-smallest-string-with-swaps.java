@@ -17,6 +17,8 @@ class Solution {
                 connectedComponets.add(connected);
             }
         }
+
+        adjList.clear();
         //System.out.println(connectedComponets);
 
         List<ArrayDeque<Character>> qs = new ArrayList<>();
