@@ -19,22 +19,23 @@ class Solution {
         }
         //System.out.println(connectedComponets);
 
-        List<PriorityQueue<Character>> qs = new ArrayList<>();
-        HashMap<Character, Integer> qsMap = new HashMap<>();
+        List<ArrayDeque<Character>> qs = new ArrayList<>();
+        HashMap<String, Integer> qsMap = new HashMap<>();
         for (int i = 0; i < connectedComponets.size(); i++) {
-            PriorityQueue<Character> c = new PriorityQueue<>();
+            List<Character> c = new ArrayList<>();
             for (int n : connectedComponets.get(i)) {
                 c.add(s.charAt(n));
-                qsMap.put(s.charAt(n), i);
+                qsMap.put(s.charAt(n) + "-" + n, i);
             }
-            qs.add(c);
+            Collections.sort(c);
+            qs.add(new ArrayDeque(c));
         }
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
-            Integer index = qsMap.get(s.charAt(i));
+            Integer index = qsMap.get(s.charAt(i) + "-" + i);
             if (index != null)
-                sb.append(qs.get(qsMap.get(s.charAt(i))).poll());
+                sb.append(qs.get(index).pop());
             else
                 sb.append(s.charAt(i));
         }
